@@ -1,10 +1,8 @@
-'use strict';
-
-var parse = require('../');
-var test = require('tape');
+import parse from '../index.js';
+import test from 'tape';
 
 test('whitespace should be whitespace', function (t) {
 	t.plan(1);
-	var x = parse(['-x', '\t']).x;
+	const x = parse(['-x', '\t']).x;
 	t.equal(x, '\t');
 });

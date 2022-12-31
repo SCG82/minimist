@@ -1,7 +1,5 @@
-'use strict';
-
-var test = require('tape');
-var parse = require('../');
+import parse from '../index.js';
+import test from 'tape';
 
 test('long opts', function (t) {
 	t.deepEqual(

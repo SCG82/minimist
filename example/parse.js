@@ -1,4 +1,4 @@
-'use strict';
+import parseArgs from '../index.js';
 
-var argv = require('../')(process.argv.slice(2));
+const argv = parseArgs(process.argv.slice(2));
 console.log(argv);

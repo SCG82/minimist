@@ -7,15 +7,18 @@
 
 [![npm badge][npm-badge-png]][package-url]
 
-parse argument options
+parse argument options (esm fork)
+
+This is an ESM fork of [minimist](https://github.com/minimistjs/minimist).
 
 This module is the guts of optimist's argument parser without all the
-fanciful decoration.
+fanciful decoration. 
 
 # example
 
 ``` js
-var argv = require('minimist')(process.argv.slice(2));
+import parseArgs from '@scg82/minimist';
+const argv = parseArgs(process.argv.slice(2));
 console.log(argv);
 ```
 
@@ -38,23 +41,13 @@ $ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
 }
 ```
 
-# security
-
-Previous versions had a prototype pollution bug that could cause privilege
-escalation in some circumstances when handling untrusted user input.
-
-Please use version 1.2.6 or later:
-
-* https://security.snyk.io/vuln/SNYK-JS-MINIMIST-2429795 (version <=1.2.5)
-* https://snyk.io/vuln/SNYK-JS-MINIMIST-559764 (version <=1.2.3)
-
 # methods
 
 ``` js
-var parseArgs = require('minimist')
+import parseArgs from '@scg82/minimist';
 ```
 
-## var argv = parseArgs(args, opts={})
+## const argv = parseArgs(args, opts={})
 
 Return an argument object `argv` populated with the array arguments from `args`.
 
@@ -82,7 +75,7 @@ first non-option
 and `argv['--']` with everything after the `--`. Here's an example:
 
   ```
-  > require('./')('one two three -- four five --six'.split(' '), { '--': true })
+  > parseArgs('one two three -- four five --six'.split(' '), { '--': true })
   {
     _: ['one', 'two', 'three'],
     '--': ['four', 'five', '--six']
@@ -101,21 +94,21 @@ unknown option is not added to `argv`.
 With [npm](https://npmjs.org) do:
 
 ```
-npm install minimist
+npm install @scg82/minimist
 ```
 
 # license
 
 MIT
 
-[package-url]: https://npmjs.org/package/minimist
-[npm-version-svg]: https://versionbadg.es/minimistjs/minimist.svg
-[npm-badge-png]: https://nodei.co/npm/minimist.png?downloads=true&stars=true
-[license-image]: https://img.shields.io/npm/l/minimist.svg
+[package-url]: https://npmjs.org/package/@scg82/minimist
+[npm-version-svg]: https://versionbadg.es/scg82/minimist.svg
+[npm-badge-png]: https://nodei.co/npm/@scg82/minimist.png?downloads=true&stars=true
+[license-image]: https://img.shields.io/npm/l/@scg82/minimist.svg
 [license-url]: LICENSE
-[downloads-image]: https://img.shields.io/npm/dm/minimist.svg
-[downloads-url]: https://npm-stat.com/charts.html?package=minimist
-[codecov-image]: https://codecov.io/gh/minimistjs/minimist/branch/main/graphs/badge.svg
-[codecov-url]: https://app.codecov.io/gh/minimistjs/minimist/
-[actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/minimistjs/minimist
-[actions-url]: https://github.com/minimistjs/minimist/actions
+[downloads-image]: https://img.shields.io/npm/dm/@scg82/minimist.svg
+[downloads-url]: https://npm-stat.com/charts.html?package=@scg82/minimist
+[codecov-image]: https://codecov.io/gh/SCG82/minimist/branch/main/graphs/badge.svg
+[codecov-url]: https://app.codecov.io/gh/SCG82/minimist/
+<!-- [actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/minimistjs/minimist -->
+[actions-url]: https://github.com/SCG82/minimist/actions

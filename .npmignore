@@ -1,12 +1,14 @@
+.*
+.vscode/
+.github/
+.nyc_output/
 node_modules/
 coverage/
 test/
-.nyc_output/
-.vscode/
 
-# Only apps should have lockfiles
 npm-shrinkwrap.json
 package-lock.json
 yarn.lock
 
 .DS_Store
+

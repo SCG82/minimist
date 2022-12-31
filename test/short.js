@@ -1,7 +1,5 @@
-'use strict';
-
-var parse = require('../');
-var test = require('tape');
+import parse from '../index.js';
+import test from 'tape';
 
 test('numeric short args', function (t) {
 	t.plan(2);

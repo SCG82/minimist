@@ -1,10 +1,8 @@
-'use strict';
-
-var parse = require('../');
-var test = require('tape');
+import parse from '../index.js';
+import test from 'tape';
 
 test('flag boolean true (default all --args to boolean)', function (t) {
-	var argv = parse(['moo', '--honk', 'cow'], {
+	const argv = parse(['moo', '--honk', 'cow'], {
 		boolean: true,
 	});
 
@@ -18,7 +16,7 @@ test('flag boolean true (default all --args to boolean)', function (t) {
 });
 
 test('flag boolean true only affects double hyphen arguments without equals signs', function (t) {
-	var argv = parse(['moo', '--honk', 'cow', '-p', '55', '--tacos=good'], {
+	const argv = parse(['moo', '--honk', 'cow', '-p', '55', '--tacos=good'], {
 		boolean: true,
 	});
 

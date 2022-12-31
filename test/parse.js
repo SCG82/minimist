@@ -1,7 +1,5 @@
-'use strict';
-
-var parse = require('../');
-var test = require('tape');
+import parse from '../index.js';
+import test from 'tape';
 
 test('parse args', function (t) {
 	t.deepEqual(
@@ -45,14 +43,14 @@ test('comprehensive', function (t) {
 });
 
 test('flag boolean', function (t) {
-	var argv = parse(['-t', 'moo'], { boolean: 't' });
+	const argv = parse(['-t', 'moo'], { boolean: 't' });
 	t.deepEqual(argv, { t: true, _: ['moo'] });
 	t.deepEqual(typeof argv.t, 'boolean');
 	t.end();
 });
 
 test('flag boolean value', function (t) {
-	var argv = parse(['--verbose', 'false', 'moo', '-t', 'true'], {
+	const argv = parse(['--verbose', 'false', 'moo', '-t', 'true'], {
 		boolean: ['t', 'verbose'],
 		default: { verbose: true },
 	});
@@ -69,7 +67,7 @@ test('flag boolean value', function (t) {
 });
 
 test('newlines in params', function (t) {
-	var args = parse(['-s', 'X\nX']);
+	let args = parse(['-s', 'X\nX']);
 	t.deepEqual(args, { _: [], s: 'X\nX' });
 
 	// reproduce in bash:
@@ -82,18 +80,18 @@ test('newlines in params', function (t) {
 });
 
 test('strings', function (t) {
-	var s = parse(['-s', '0001234'], { string: 's' }).s;
+	const s = parse(['-s', '0001234'], { string: 's' }).s;
 	t.equal(s, '0001234');
 	t.equal(typeof s, 'string');
 
-	var x = parse(['-x', '56'], { string: 'x' }).x;
+	const x = parse(['-x', '56'], { string: 'x' }).x;
 	t.equal(x, '56');
 	t.equal(typeof x, 'string');
 	t.end();
 });
 
 test('stringArgs', function (t) {
-	var s = parse(['  ', '  '], { string: '_' })._;
+	const s = parse(['  ', '  '], { string: '_' })._;
 	t.same(s.length, 2);
 	t.same(typeof s[0], 'string');
 	t.same(s[0], '  ');
@@ -103,15 +101,15 @@ test('stringArgs', function (t) {
 });
 
 test('empty strings', function (t) {
-	var s = parse(['-s'], { string: 's' }).s;
+	const s = parse(['-s'], { string: 's' }).s;
 	t.equal(s, '');
 	t.equal(typeof s, 'string');
 
-	var str = parse(['--str'], { string: 'str' }).str;
+	const str = parse(['--str'], { string: 'str' }).str;
 	t.equal(str, '');
 	t.equal(typeof str, 'string');
 
-	var letters = parse(['-art'], {
+	const letters = parse(['-art'], {
 		string: ['a', 't'],
 	});
 
@@ -123,7 +121,7 @@ test('empty strings', function (t) {
 });
 
 test('string and alias', function (t) {
-	var x = parse(['--str', '000123'], {
+	const x = parse(['--str', '000123'], {
 		string: 's',
 		alias: { s: 'str' },
 	});
@@ -133,7 +131,7 @@ test('string and alias', function (t) {
 	t.equal(x.s, '000123');
 	t.equal(typeof x.s, 'string');
 
-	var y = parse(['-s', '000123'], {
+	const y = parse(['-s', '000123'], {
 		string: 'str',
 		alias: { str: 's' },
 	});
@@ -143,7 +141,7 @@ test('string and alias', function (t) {
 	t.equal(y.s, '000123');
 	t.equal(typeof y.s, 'string');
 
-	var z = parse(['-s123'], {
+	const z = parse(['-s123'], {
 		alias: { str: ['s', 'S'] },
 		string: ['str'],
 	});
@@ -169,7 +167,7 @@ test('slashBreak', function (t) {
 });
 
 test('alias', function (t) {
-	var argv = parse(['-f', '11', '--zoom', '55'], {
+	const argv = parse(['-f', '11', '--zoom', '55'], {
 		alias: { z: 'zoom' },
 	});
 	t.equal(argv.zoom, 55);
@@ -179,7 +177,7 @@ test('alias', function (t) {
 });
 
 test('multiAlias', function (t) {
-	var argv = parse(['-f', '11', '--zoom', '55'], {
+	const argv = parse(['-f', '11', '--zoom', '55'], {
 		alias: { z: ['zm', 'zoom'] },
 	});
 	t.equal(argv.zoom, 55);
@@ -190,7 +188,7 @@ test('multiAlias', function (t) {
 });
 
 test('nested dotted objects', function (t) {
-	var argv = parse([
+	const argv = parse([
 		'--foo.bar', '3', '--foo.baz', '4',
 		'--foo.quux.quibble', '5', '--foo.quux.o_O',
 		'--beep.boop',

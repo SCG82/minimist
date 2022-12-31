@@ -1,12 +1,10 @@
-'use strict';
-
 function hasKey(obj, keys) {
-	var o = obj;
+	let o = obj;
 	keys.slice(0, -1).forEach(function (key) {
 		o = o[key] || {};
 	});
 
-	var key = keys[keys.length - 1];
+	const key = keys[keys.length - 1];
 	return key in o;
 }
 
@@ -20,10 +18,10 @@ function isConstructorOrProto(obj, key) {
 	return (key === 'constructor' && typeof obj[key] === 'function') || key === '__proto__';
 }
 
-module.exports = function (args, opts) {
+export default function minimist(args, opts) {
 	if (!opts) { opts = {}; }
 
-	var flags = {
+	const flags = {
 		bools: {},
 		strings: {},
 		unknownFn: null,
@@ -41,7 +39,7 @@ module.exports = function (args, opts) {
 		});
 	}
 
-	var aliases = {};
+	const aliases = {};
 
 	function aliasIsBoolean(key) {
 		return aliases[key].some(function (x) {
@@ -67,9 +65,9 @@ module.exports = function (args, opts) {
 		}
 	});
 
-	var defaults = opts.default || {};
+	const defaults = opts.default || {};
 
-	var argv = { _: [] };
+	const argv = { _: [] };
 
 	function argDefined(key, arg) {
 		return (flags.allBools && (/^--[^=]+$/).test(arg))
@@ -79,9 +77,9 @@ module.exports = function (args, opts) {
 	}
 
 	function setKey(obj, keys, value) {
-		var o = obj;
-		for (var i = 0; i < keys.length - 1; i++) {
-			var key = keys[i];
+		let o = obj;
+		for (let i = 0; i < keys.length - 1; i++) {
+			const key = keys[i];
 			if (isConstructorOrProto(o, key)) { return; }
 			if (o[key] === undefined) { o[key] = {}; }
 			if (
@@ -95,7 +93,7 @@ module.exports = function (args, opts) {
 			o = o[key];
 		}
 
-		var lastKey = keys[keys.length - 1];
+		const lastKey = keys[keys.length - 1];
 		if (isConstructorOrProto(o, lastKey)) { return; }
 		if (
 			o === Object.prototype
@@ -119,7 +117,7 @@ module.exports = function (args, opts) {
 			if (flags.unknownFn(arg) === false) { return; }
 		}
 
-		var value = !flags.strings[key] && isNumber(val)
+		const value = !flags.strings[key] && isNumber(val)
 			? Number(val)
 			: val;
 		setKey(argv, key.split('.'), value);
@@ -133,25 +131,25 @@ module.exports = function (args, opts) {
 		setArg(key, defaults[key] === undefined ? false : defaults[key]);
 	});
 
-	var notFlags = [];
+	let notFlags = [];
 
 	if (args.indexOf('--') !== -1) {
 		notFlags = args.slice(args.indexOf('--') + 1);
 		args = args.slice(0, args.indexOf('--'));
 	}
 
-	for (var i = 0; i < args.length; i++) {
-		var arg = args[i];
-		var key;
-		var next;
+	for (let i = 0; i < args.length; i++) {
+		const arg = args[i];
+		let key;
+		let next;
 
 		if ((/^--.+=/).test(arg)) {
 			// Using [\s\S] instead of . because js doesn't support the
 			// 'dotall' regex modifier. See:
 			// http://stackoverflow.com/a/1068308/13216
-			var m = arg.match(/^--([^=]+)=([\s\S]*)$/);
+			const m = arg.match(/^--([^=]+)=([\s\S]*)$/);
 			key = m[1];
-			var value = m[2];
+			let value = m[2];
 			if (flags.bools[key]) {
 				value = value !== 'false';
 			}
@@ -178,10 +176,10 @@ module.exports = function (args, opts) {
 				setArg(key, flags.strings[key] ? '' : true, arg);
 			}
 		} else if ((/^-[^-]+/).test(arg)) {
-			var letters = arg.slice(1, -1).split('');
+			const letters = arg.slice(1, -1).split('');
 
-			var broken = false;
-			for (var j = 0; j < letters.length; j++) {
+			let broken = false;
+			for (let j = 0; j < letters.length; j++) {
 				next = arg.slice(j + 2);
 
 				if (next === '-') {
@@ -260,4 +258,4 @@ module.exports = function (args, opts) {
 	}
 
 	return argv;
-};
+}
