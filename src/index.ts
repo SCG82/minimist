@@ -1,12 +1,12 @@
 import process from 'node:process'
-import type { Flags, Opts, ParsedArgs } from './types'
+import type { Flags, Opts, ParsedArgs } from './types.js'
 import {
     aliasIsBoolean,
     argDefined,
     hasKey,
     isConstructorOrProto,
     isNumber,
-} from './utilities'
+} from './utilities.js'
 
 /**
  * Return an argument object populated with the array arguments from args
@@ -198,10 +198,10 @@ export function minimist<T extends ParsedArgs>(
                 }
                 setArg(key, value, arg)
             }
-        } else if ((match = arg.match(/^--no-(.+)/))) {
+        } else if ((match = String(arg).match(/^--no-(.+)/))) {
             key = match[1]
             setArg(key, false, arg)
-        } else if ((match = arg.match(/^--(.+)/))) {
+        } else if ((match = String(arg).match(/^--(.+)/))) {
             key = match[1]
             next = args[i + 1]
             if (
@@ -222,7 +222,7 @@ export function minimist<T extends ParsedArgs>(
             } else if (key) {
                 setArg(key, flags.strings[key] ? '' : true, arg)
             }
-        } else if (/^-[^-]+/.test(arg)) {
+        } else if (/^-[^-]+/.test(String(arg))) {
             const letters = arg.slice(1, -1).split('')
 
             let broken = false

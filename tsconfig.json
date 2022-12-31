@@ -2,6 +2,7 @@
     "extends": "@tsconfig/node18",
     "compilerOptions": {
         "outDir": "dist",
+        "module": "ESNext",
         "declaration": true,
         "sourceMap": true,
         "types": ["node"]

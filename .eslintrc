@@ -36,7 +36,7 @@
 
     "overrides": [
         {
-            "files": ["*.ts"],
+            "files": ["*.ts", "*.js"],
             "rules": {
                 "no-cond-assign": 0,
                 "no-unused-vars": 0,
