@@ -1,6 +1,6 @@
 # minimist <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
 
-[![github actions][actions-image]][actions-url]
+<!-- [![github actions][actions-image]][actions-url] -->
 [![coverage][codecov-image]][codecov-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
@@ -22,12 +22,12 @@ const argv = parseArgs(process.argv.slice(2));
 console.log(argv);
 ```
 
-```
+``` sh
 $ node example/parse.js -a beep -b boop
 { _: [], a: 'beep', b: 'boop' }
 ```
 
-```
+``` sh
 $ node example/parse.js -x 3 -y 4 -n5 -abc --beep=boop foo bar baz
 {
 	_: ['foo', 'bar', 'baz'],
@@ -72,13 +72,18 @@ argument names to use as aliases
 * `opts.stopEarly` - when true, populate `argv._` with everything after the
 first non-option
 * `opts['--']` - when true, populate `argv._` with everything before the `--`
-and `argv['--']` with everything after the `--`. Here's an example:
+and `argv['--']` with everything after the `--`.
 
+Here's an example:
+
+  ``` js
+  parseArgs('one two three -- four five --six'.split(' '), { '--': true })
   ```
-  > parseArgs('one two three -- four five --six'.split(' '), { '--': true })
+  returns
+  ``` js
   {
-    _: ['one', 'two', 'three'],
-    '--': ['four', 'five', '--six']
+      _: ['one', 'two', 'three'],
+      '--': ['four', 'five', '--six']
   }
   ```
 

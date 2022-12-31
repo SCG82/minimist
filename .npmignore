@@ -5,6 +5,7 @@
 node_modules/
 coverage/
 test/
+src/
 
 npm-shrinkwrap.json
 package-lock.json
